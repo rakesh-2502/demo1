@@ -1,24 +1,41 @@
 pipeline {
 	agent any
-	tools {
-        maven 'm1' 
-    }
 	stages {
-		stage('Build') {
+	    stage ('clean up') {
+	        steps {
+	            cleanWs()
+	        }
+	    }
+	}
+		stage ('build') {
 			steps {
-				sh 'mvn -B -DskipTests clean install'
+			    dir ('demo1'){
+				    sh 'mvn clean install -DskipTests'
+			    }
 			}
+		
 		}
-		stage('Testing') {
+		stage ('test') {
 			steps {
-				sh 'mvn test'
+			    dir ('demo1'){
+				    sh 'mvn test'
+			    }
 			}
 			post {
 				always {
-					junit 'target/surefire-reports/*.xml'
+				    dir ('demo1'){
+					    junit 'target/surefire-reports/*.*xml'
+				    }
 				}
 			}
 		}
+		stage ('run') {
+			steps {
+			    dir ('demo1'){
+			    	sh './scripts/deliver.sh'
+			    }
+			}
 		
+		}
 	}
 }
