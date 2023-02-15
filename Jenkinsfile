@@ -6,7 +6,12 @@ pipeline {
 	            cleanWs()
 	        }
 	    }
-	}
+	    stage ('clone') {
+			steps {
+				sh 'git clone https://github.com/rakesh-2502/demo1'
+			}
+		
+		}
 		stage ('build') {
 			steps {
 			    dir ('demo1'){
