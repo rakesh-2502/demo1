@@ -29,13 +29,6 @@ pipeline {
 				}
 			}
 		}
-		stage ('run') {
-			steps {
-			    dir ('demo1'){
-			    	sh './scripts/deliver.sh'
-			    }
-			}
 		
-		}
 	}
 }
