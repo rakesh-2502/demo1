@@ -26,13 +26,7 @@ pipeline {
 				    sh 'mvn test'
 			    }
 			}
-			post {
-				always {
-				    dir ('demo1'){
-					    junit 'target/surefire-reports/*.*xml'
-				    }
-				}
-			}
+			
 		}
 		
 	}
